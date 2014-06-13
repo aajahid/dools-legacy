@@ -1,3 +1,37 @@
+<?php
+require('core.php');
+
+$widgets = array();
+
+
+if ($handle = opendir(WIDGET_DIR)) {
+    while (false !== ($widgetFolder = readdir($handle))) {
+        if ($widgetFolder != "." && $widgetFolder != ".." && is_dir(WIDGET_DIR.$widgetFolder) ) {
+
+        	
+
+        	if( $widgetFolderHandle = opendir(WIDGET_DIR.$widgetFolder) ) {
+        		while(false !== ($widgetFolderFiles = readdir($widgetFolderHandle))) {
+	            	if( $widgetFolderFiles == 'config.json' ) {
+	            		$string = file_get_contents(WIDGET_DIR.$widgetFolder.'/config.json');
+	            		$widget = json_decode($string);
+	            		if( isset($widget->id) && isset($widget->name) && isset($widget->index) ) {
+	            			$widget->dir = WIDGET_DIR.$widgetFolder.'/';
+	            			$widget->index = $widget->dir.$widget->index;
+	            			$widgets[] = $widget;
+	            		}
+	            	}
+	            }
+	            closedir($widgetFolderHandle);
+        	}
+
+
+        }
+    }
+    closedir($handle);
+}
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,56 +50,29 @@
 				</p>
 			</div>
 		</div>
-		<div class="row">
+	
+	<?php
+		$x = 1;
+		foreach( $widgets as $widget ){
+			
+			if($x == 3) echo '<div class="row">';
+			?>
+
 			<div class="col-md-6">
 				<div class="panel panel-default">
-					<div class="panel-heading"><b>String Hashing</b></div>
+					<div class="panel-heading"><b><?php echo $widget->name ?></b></div>
 				  	<div class="panel-body">
-				    	<form action="" method="POST" class="form-horizontal" role="form">
-					
-					    	<div class="form-group">
-					        	<label class="sr-only" for="hash-string">String to convert</label>
-					        	<div class="col-md-6">
-					        		<input type="text" name="hash-string" class="form-control" value="<?php echo isset($_POST['hash-string']) ? $_POST['hash-string'] : '' ?>" id="hash-string" placeholder="String to Hash">
-					        	</div>
-					        	<label for="hash-hash" class="sr-only">Hash Algorithms</label>
-					        	<div class="col-md-4">
-					        		<select name="hash-hash" id="hash-hash" class="form-control">
-					        			<?php
-					        				foreach( hash_algos() as $hash ) :
-					        				?>
-					        				<option value="<?=$hash?>" <?=isset($_POST['hash-hash'])&&$_POST['hash-hash']==$hash?'selected="selected"':''?>><?=$hash?></option>
-					        				<?php
-					        				endforeach;
-					        			?>
-					        		</select>
-					        	</div>
-					        	<button class="btn btn-primary">Encode</button>
-					    	</div>
-					    	<div class="form-group">
-					    		<div class="col-md-12">
-						    		<div class="well">
-						    			<?php
-						    				if  ( 
-						    					isset($_POST['hash-string']) && 
-						    					isset($_POST['hash-hash']) && 
-						    					!empty($_POST['hash-string']) && 
-						    					!empty($_POST['hash-hash']) 
-						    					)
-							    				{
-							    					echo hash($_POST['hash-hash'], $_POST['hash-string']);
-							    				}
-						    			?>
-						    		</div>
-						    	</div>
-					    	</div>
-
-						</form>  
+				    	 <?php include($widget->index) ?>
 				  	</div>
 				</div>
 			</div>
+				
+			<?php
+			if($x == 3) echo '</div>';
 			
-		</div>
+		}
+	?>
+
 	</div>
 </body>
 <script type="text/javascript" src="resources/js/jquery.min.js"></script>

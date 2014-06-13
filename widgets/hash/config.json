@@ -1,0 +1,11 @@
+{
+	"id": "hash",
+	"name": "String Hashing",
+	"description": "Hash strings using all popular hashing algo available in PHP",
+	"index": "index.php",
+	"author": {
+		"name": "Abdullah Al Jahid",
+		"email": "abdullah.al.jahid@gmail.com",
+		"website": "www.dwetech.com"
+	}
+}

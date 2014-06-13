@@ -1,0 +1,11 @@
+{
+	"id": "Encode",
+	"name": "Encode/Decode String",
+	"Description": "Encode/Decode string using available php encode/decode function",
+	"index": "index.php",
+	"author": {
+		"name": "Abdullah Al Jahid",
+		"email": "Abdullah.al.jahid@gmail.com",
+		"website": "www.Dwetech.com"
+	}
+}
