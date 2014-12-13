@@ -1,0 +1,6 @@
+{
+    "widgets":  [
+        {"id": "encode", "name": "Encode/Decode", "version":"0.1"},
+        {"id": "hash", "name": "Hashing", "version":"0.1"}
+    ]
+}

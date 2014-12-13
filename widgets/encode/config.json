@@ -1,7 +1,8 @@
 {
 	"id": "Encode",
 	"name": "Encode/Decode String",
-	"Description": "Encode/Decode string using available php encode/decode function",
+	"description": "Encode/Decode string using available php encode/decode function",
+    "version": 0.1,
 	"index": "index.php",
 	"author": {
 		"name": "Abdullah Al Jahid",
